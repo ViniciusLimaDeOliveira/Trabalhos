@@ -39,7 +39,7 @@ export default class App extends Component{
             <Switch>
               <Route exact path='/'        component={Home}  />
               <Route       path='/Create'  component={Create}/>
-              <Route       path='/Edit'    component={Edit}  />
+              <Route       path='/Edit/:id'    component={Edit}  />
               <Route       path='/List'    component={List}  /> 
             </Switch>
         </div>
