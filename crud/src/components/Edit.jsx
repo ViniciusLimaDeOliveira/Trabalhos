@@ -30,8 +30,11 @@ export default class Edit extends Component {
             curso:this.state.curso,
             IRA:this.state.ira
         }
-        axios.put('http://localhost:3001/estudantes/' + this.props.match.params.id,
-                   estudanteEdit)
+        //axios.put('http://localhost:3001/estudantes/' + this.props.match.params.id,
+        //           estudanteEdit) // json
+        axios.put('http://localhost:3002/estudantes/update/' + this.props.match.params.id,
+                   estudanteEdit)//express
+        
         .then(
             (res)=>{
                 this.props.history.push('/list');
@@ -41,7 +44,8 @@ export default class Edit extends Component {
     }
     componentDidMount() {
         //console.log("id: " + this.props.match.params.id)
-        axios.get('http://localhost:3001/estudantes/' + this.props.match.params.id)
+        //axios.get('http://localhost:3001/estudantes/' + this.props.match.params.id) json
+        axios.get('http://localhost:3002/estudantes/retrieve/' + this.props.match.params.id)//express
             .then(
                 (res) => {
                     this.setState(

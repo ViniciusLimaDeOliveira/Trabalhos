@@ -1,11 +1,13 @@
 import React from 'react'
 
-export default()=>{
-   return <div>
-       <ul>
-            <li>Nome: Vinícius Lima de Oliveira</li>
-            <li>Curso: Ciência da Computação</li>
-            <li>Cidade Natal : Aracoiaba</li>
-        </ul>
-    </div>
+export default class questao2 extends React.Component{
+    render(){
+        return <div>
+            <ul>
+                <li>Nome: {this.props.name}</li>
+                <li>Curso: {this.props.curso}</li>
+                <li>Cidade Natal : {this.props.cidade}</li>
+            </ul>
+     </div>
+    }
 }
