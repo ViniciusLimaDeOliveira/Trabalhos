@@ -29,7 +29,7 @@ export default class Create extends Component {
                                    curso:this.state.curso,
                                    IRA:this.state.ira} 
 
-            //axios.post('http://localhost:3001/estudantes',novoEstudante) json
+            //axios.post('http://localhost:3001/estudantes',novoEstudante) //json
             axios.post('http://localhost:3002/estudantes/register',novoEstudante)//express
             .then(
                 (res)=>{
