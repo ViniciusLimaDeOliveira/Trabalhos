@@ -8,6 +8,6 @@ var EstudanteSchema = mongoose.Schema(
     }
 );
 
-var EsrudanteModel = mongoose.model('estudantes',EstudanteSchema);
+var EstudanteModel = mongoose.model('estudantes',EstudanteSchema);
 
-module.exports = EsrudanteModel;
+module.exports = EstudanteModel;
