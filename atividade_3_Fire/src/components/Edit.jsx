@@ -1,8 +1,15 @@
 
 import React, { Component } from 'react'
-import axios from 'axios'
+import FirebaseContext from '../utils/FirebaseContext'
 
-export default class Edit extends Component {
+const EditPage = (props) => (
+    <FirebaseContext.Consumer>
+        {contexto => (<Edit firebase={contexto} id={props.match.params.id} />)}
+    </FirebaseContext.Consumer>
+)
+
+
+class Edit extends Component {
     constructor(props) {
         super(props)
         this.state = { nome: '', curso: '', capacidade: '' }
@@ -22,31 +29,30 @@ export default class Edit extends Component {
     }
     onSubmit(e) {
         e.preventDefault()
-        const DisciplinaAtualiazada =
-        {
-            nome: this.state.nome,
-            curso: this.state.curso,
-            capacidade: this.state.capacidade
-        }
-        //axios.put('http://localhost:3001/disciplinas/' + this.props.match.params.id, DisciplinaAtualiazada)
-        axios.put('http://localhost:3002/disciplinas/update/' + this.props.match.params.id, DisciplinaAtualiazada)
+
+        this.props.firebase.getFirestore().collection('disciplinas').doc(this.props.id).set(
+            {
+                nome: this.state.nome,
+                curso: this.state.curso,
+                capacidade: this.state.capacidade
+            }
+        )
             .then(
                 res => {
-                    this.props.history.push('/list');
+                    console.log("Inserido com suscesso")
                 }
             )
             .catch(error => console.log(error))
     }
     componentDidMount() {
-        //axios.get('http://localhost:3001/disciplinas/' + this.props.match.params.id)
-        axios.get('http://localhost:3002/disciplinas/retrieve/' + this.props.match.params.id)
-        .then(
-                (res) => {
+        this.props.firebase.getFirestore().collection('disciplinas').doc(this.props.id).get()
+            .then(
+                (doc) => {
                     this.setState(
                         {
-                            nome: res.data.nome,
-                            curso: res.data.curso,
-                            capacidade: res.data.capacidade
+                            nome: doc.data().nome,
+                            curso: doc.data().curso,
+                            capacidade: doc.data().capacidade
                         }
                     )
                 }
@@ -65,17 +71,17 @@ export default class Edit extends Component {
                     <div className="form-group">
                         <label>Nome:    </label>
                         <input type="text" className="form-control"
-                            value={this.state.nome} onChange={this.setNome} required/>
+                            value={this.state.nome} onChange={this.setNome} required />
                     </div>
                     <div className="form-group">
                         <label>Curso:    </label>
                         <input type="text" className="form-control"
-                            value={this.state.curso} onChange={this.setCurso} required/>
+                            value={this.state.curso} onChange={this.setCurso} required />
                     </div>
                     <div className="form-group">
                         <label>Capacidade:    </label>
                         <input type="number" className="form-control"
-                            value={this.state.capacidade} onChange={this.setCapacidade} min="0" required/>
+                            value={this.state.capacidade} onChange={this.setCapacidade} min="0" required />
                     </div>
                     <div className="form-group">
                         <input type="submit" value="Editar" className="btn btn-primary" />
@@ -85,3 +91,5 @@ export default class Edit extends Component {
         )
     }
 }
+
+export default EditPage

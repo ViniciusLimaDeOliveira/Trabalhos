@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import FirebaseContext from '../utils/FirebaseContext'
 
-export default class Create extends Component {
+const CreatePage = () => (
+    <FirebaseContext.Consumer>
+        {contexto => (<Create firebase={contexto} />)}
+    </FirebaseContext.Consumer>
+)
+
+
+class Create extends Component {
     constructor(props) {
         super(props)
         this.state = { nome: '', curso: '', capacidade: '' }
@@ -21,24 +28,17 @@ export default class Create extends Component {
     }
     onSubmit(e) {
         e.preventDefault()
-        const novaDisciplina = {
-            nome: this.state.nome,
-            curso: this.state.curso,
-            capacidade: this.state.capacidade
-        }
 
-            //axios.post('http://localhost:3001/disciplinas',novaDisciplina) json
-            axios.post('http://localhost:3002/disciplinas/register',novaDisciplina)
-            .then(
-                (res) => {
-                    console.log('Disciplina ' + res.data.id + ' inserido com sucesso.')
-                }
-            )
-            .catch(
-                (error) => {
-                    console.log(error)
-                }
-            )
+        this.props.firebase.getFirestore().collection('disciplinas').add(
+            {
+                nome: this.state.nome,
+                curso: this.state.curso,
+                capacidade: this.state.capacidade
+            }
+
+        )
+        .then(()=>console.log(`${this.state.nome} foi inserido com susseso`))
+        .catch(error =>console.log(error) )
 
         this.setState({ nome: '', curso: '', capacidade: '' })
     }
@@ -50,17 +50,17 @@ export default class Create extends Component {
                     <div className="form-group">
                         <label>Nome*:    </label>
                         <input type="text" className="form-control"
-                            value={this.state.nome} onChange={this.setNome} required/>
+                            value={this.state.nome} onChange={this.setNome} required />
                     </div>
                     <div className="form-group">
                         <label>Curso*:    </label>
                         <input type="text" className="form-control"
-                            value={this.state.curso} onChange={this.setCurso} required/>
+                            value={this.state.curso} onChange={this.setCurso} required />
                     </div>
                     <div className="form-group">
                         <label>Capacidade*:    </label>
                         <input type="number" className="form-control"
-                            value={this.state.capacidade} onChange={this.setCapacidade} min="0" required/>
+                            value={this.state.capacidade} onChange={this.setCapacidade} min="0" required />
                     </div>
                     <div className="form-group">
                         <input type="submit" value="Criar" className="btn btn-primary" />
@@ -70,3 +70,5 @@ export default class Create extends Component {
         )
     }
 }
+
+export default CreatePage
