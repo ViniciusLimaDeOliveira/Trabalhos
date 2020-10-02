@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react'
 import FirebaseContext from '../utils/FirebaseContext'
+import FirebaseService from '../services/FirebaseService'
 
 const EditPage = (props) => (
     <FirebaseContext.Consumer>
@@ -29,7 +30,7 @@ class Edit extends Component {
     }
     onSubmit(e) {
         e.preventDefault()
-
+        /*
         this.props.firebase.getFirestore().collection('disciplinas').doc(this.props.id).set(
             {
                 nome: this.state.nome,
@@ -43,9 +44,25 @@ class Edit extends Component {
                 }
             )
             .catch(error => console.log(error))
+            */
+        const disciplina = {
+            nome: this.state.nome,
+            curso: this.state.curso,
+            capacidade: this.state.capacidade
+        }
+        FirebaseService.edit(
+            this.props.firebase.getFirestore(),
+            (a) => {
+                if (a === 'ok') console.log(a)
+                else console.log(a)
+            },
+            this.props.id,
+            disciplina
+        )
+
     }
     componentDidMount() {
-        this.props.firebase.getFirestore().collection('disciplinas').doc(this.props.id).get()
+        /*this.props.firebase.getFirestore().collection('disciplinas').doc(this.props.id).get()
             .then(
                 (doc) => {
                     this.setState(
@@ -62,6 +79,21 @@ class Edit extends Component {
                     console.log(error)
                 }
             )
+            */
+        FirebaseService.retrieve(
+            this.props.firebase.getFirestore(),
+            (doc) => {
+                this.setState(
+                    {
+                        nome: doc.nome,
+                        curso: doc.curso,
+                        capacidade: doc.capacidade
+                    }
+                )
+            },
+            this.props.id
+        )
+
     }
     render() {
         return (
