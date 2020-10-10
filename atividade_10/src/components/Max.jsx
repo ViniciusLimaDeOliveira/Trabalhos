@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import Card from './Card'
-import axios from 'axios'
+//import axios from 'axios'
 
 export default class NumeroBack extends Component {
     constructor(props) {
         super(props)
-        this.state = { valor1: '', valor2: '' }
+       // this.state = { valor1: '', valor2: '' }
     }
+    /*
     componentDidMount() {
         axios.get('http://localhost:3001/numeros/1')
             .then(
@@ -25,7 +26,7 @@ export default class NumeroBack extends Component {
                 }
             )
     }
-
+        */
     render() {
         function max(a, b) {
             if (a > b) return a
@@ -33,7 +34,7 @@ export default class NumeroBack extends Component {
             else return `Iguais: ${a}`
         }
 
-        const resutado = max(parseInt(this.state.valor1, 10), parseInt(this.state.valor2, 10))
+        const resutado = max(parseInt(this.props.valor1, 10), parseInt(this.props.valor2, 10))
         return (
             <div>
                 <Card title='Max' dark>
