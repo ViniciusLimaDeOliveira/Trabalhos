@@ -1,4 +1,4 @@
 export * from './Soma'
-export * from './Multiplicação'
+export * from './Multi'
 export * from './Max'
 export * from './Navegate'
