@@ -1,64 +1,70 @@
 import React, { Component } from 'react'
 import Card from './Card'
+//import axios from 'axios'
 import './Navegate.css'
 
-import {connect} from 'react-redux'
-import {altNumber,altNumber2} from '../store/actions/actionNumberCreator'
+export default class Navigate extends Component {
 
-class Navigate extends Component {
+    constructor(props) {
+        super(props)
+        this.state = { valor1: this.props.valor1, valor2: this.props.valor2 }
+    }
+
     soma1_num1() {
-        const num = this.props.mynumber1 + 1 
-        this.props.alterarNumero(num)
+        const num = this.state.valor1 + 1
+        this.setState({ valor1: num })
+        this.props.setValor1(num)
     }
 
     sub1_num1() {
 
-        const num = this.props.mynumber1 - 1 
-        this.props.alterarNumero(num)
-       
+        const num = this.state.valor1 - 1
+        this.setState({ valor1: num })
+        this.props.setValor1(num)
     }
 
     soma10_num1() {
 
-        const num = this.props.mynumber1 + 10
-        this.props.alterarNumero(num)
-        
+        const num = this.state.valor1 + 10
+        this.setState({ valor1: num })
+        this.props.setValor1(num)
     }
 
     sub10_num1() {
 
-        const num = this.props.mynumber1 - 10 
-        this.props.alterarNumero(num)
-        
+        const num = this.state.valor1 - 10
+        this.setState({ valor1: num })
+        this.props.setValor1(num)
     }
     //num2
     soma1_num2() {
-        const num = this.props.mynumber2 + 1 
-        this.props.alterarNumero2(num)
+        const num = this.state.valor2 + 1
+        this.setState({ valor2: num })
+        this.props.setValor2(num)
     }
 
     sub1_num2() {
 
-        const num = this.props.mynumber2 - 1 
-        this.props.alterarNumero2(num)
-        
+        const num = this.state.valor2 - 1
+        this.setState({ valor2: num })
+        this.props.setValor2(num)
     }
 
     soma10_num2() {
 
-        const num = this.props.mynumber2 + 10
-        this.props.alterarNumero2(num)
+        const num = this.state.valor2 + 10
+        this.setState({ valor2: num })
+        this.props.setValor2(num)
     }
     sub10_num2() {
-
-        const num = this.props.mynumber2 - 10 
-        this.props.alterarNumero2(num)
-     }
-
+        const num = this.state.valor2 - 10
+        this.setState({ valor2: num })
+        this.props.setValor2(num)
+    }
     render() {
         return (
             <div>
-                <Card title="Numero 1 " red>
+                <Card title="Numero 2" red>
                 <div className='navegate'>
                     <button className='btn btn-secondary' onClick={() => this.sub10_num1()}>
                         -10
@@ -66,7 +72,7 @@ class Navigate extends Component {
                     <button className='btn btn-secondary' onClick={() => this.sub1_num1()}>
                         -1
                     </button>
-                    <input value={this.props.mynumber1} readOnly />
+                    <input value={this.state.valor1} readOnly />
                     <button className='btn btn-secondary' onClick={() => this.soma1_num1()}>
                         +1
                     </button>
@@ -75,7 +81,7 @@ class Navigate extends Component {
                     </button>
                 </div>
             </Card>
-            <Card title="Numero 2" blue>
+            <Card title="Numero 1" blue>
                 <div className='navegate'>
                     <button className='btn btn-secondary' onClick={() => this.sub10_num2()}>
                         -10
@@ -83,7 +89,7 @@ class Navigate extends Component {
                     <button className='btn btn-secondary' onClick={() => this.sub1_num2()}>
                         -1
                     </button>
-                    <input value={this.props.mynumber2} readOnly />
+                    <input value={this.state.valor2} readOnly />
                     <button className='btn btn-secondary' onClick={() => this.soma1_num2()}>
                         +1
                     </button>
@@ -98,30 +104,3 @@ class Navigate extends Component {
 
     }
 }
-
-function mapStateToProps(state){
-    return{
-        mynumber1: state.vnumber1.number1,
-        mynumber2: state.vnumber2.number2
-    }
-}
-
-function mapActionCreatorToProps(dispatch){
-    
-    return{
-        alterarNumero(novoNum){
-            const action = altNumber(novoNum)
-            dispatch(action)
-        },
-        alterarNumero2(novoNum){
-            const action = altNumber2(novoNum)
-            dispatch(action)
-        }
-
-    }
-}
-
-
-
-const connecNavigate =connect(mapStateToProps,mapActionCreatorToProps)(Navigate)
-export {connecNavigate}

@@ -1,39 +1,28 @@
 import React, { Component } from 'react'
 import Card from './Card'
-//import axios from 'axios'
 
-export default class NumeroFront extends Component {
-    constructor(props) {
-        super(props)
-        //this.state = { valor1:'', valor2:'' }
-    }
-   /* componentDidMount() {
-        axios.get('http://localhost:3001/numeros/1' )
-        .then(
-                (res) => {
-                    this.setState(
-                        {
-                            valor1: res.data.valor1,
-                            valor2: res.data.valor2
-                        }
-                    )
-                }
-            )
-            .catch(
-                (error) => {
-                    console.log(error)
-                }
-            )
-    }*/
+import {connect} from 'react-redux'
+
+class Multi extends Component {
+    
     render() {
         return (
             <div>
                 <Card title='Multiplicação' dark>
                     <div>
-                        {parseInt(this.props.valor1, 10)*parseInt(this.props.valor2, 10)}
+                        {parseInt(this.props.mynumber1, 10)*parseInt(this.props.mynumber2, 10)}
                 </div>
                 </Card>
             </div>
         )
     }
 }
+function mapStateToProps(state){
+    return{
+        mynumber1: state.vnumber1.number1,
+        mynumber2: state.vnumber2.number2
+    }
+}
+
+const connecMulti = connect(mapStateToProps)(Multi)
+export {connecMulti}

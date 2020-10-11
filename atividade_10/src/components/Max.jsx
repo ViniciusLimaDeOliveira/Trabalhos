@@ -1,32 +1,9 @@
 import React, { Component } from 'react'
 import Card from './Card'
-//import axios from 'axios'
+import {connect} from 'react-redux'
 
-export default class NumeroBack extends Component {
-    constructor(props) {
-        super(props)
-       // this.state = { valor1: '', valor2: '' }
-    }
-    /*
-    componentDidMount() {
-        axios.get('http://localhost:3001/numeros/1')
-            .then(
-                (res) => {
-                    this.setState(
-                        {
-                            valor1: res.data.valor1,
-                            valor2: res.data.valor2
-                        }
-                    )
-                }
-            )
-            .catch(
-                (error) => {
-                    console.log(error)
-                }
-            )
-    }
-        */
+class Max extends Component {
+   
     render() {
         function max(a, b) {
             if (a > b) return a
@@ -34,7 +11,7 @@ export default class NumeroBack extends Component {
             else return `Iguais: ${a}`
         }
 
-        const resutado = max(parseInt(this.props.valor1, 10), parseInt(this.props.valor2, 10))
+        const resutado = max(parseInt(this.props.mynumber1, 10), parseInt(this.props.mynumber2, 10))
         return (
             <div>
                 <Card title='Max' dark>
@@ -48,3 +25,13 @@ export default class NumeroBack extends Component {
     }
 }
 
+function mapStateToProps(state){
+    return{
+        mynumber1: state.vnumber1.number1,
+        mynumber2: state.vnumber2.number2
+    }
+}
+
+ 
+const connecMax= connect(mapStateToProps)(Max)
+export {connecMax}
